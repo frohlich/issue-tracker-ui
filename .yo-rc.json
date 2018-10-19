@@ -1,0 +1,19 @@
+{
+  "generator-jhipster": {
+    "jhipsterVersion": "5.5.0",
+    "applicationType": "monolith",
+    "baseName": "IssueTracker",
+    "clientFramework": "angularX",
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "prodDatabaseType": "postgresql",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "enableTranslation": false,
+    "skipServer": true
+  }
+}
