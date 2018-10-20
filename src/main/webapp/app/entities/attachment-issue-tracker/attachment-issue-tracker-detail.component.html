@@ -1,0 +1,57 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="attachment">
+            <h2><span>Attachment</span> {{attachment.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Filename</span></dt>
+                <dd>
+                    <span>{{attachment.filename}}</span>
+                </dd>
+                <dt><span>Size</span></dt>
+                <dd>
+                    <span>{{attachment.size}}</span>
+                </dd>
+                <dt><span>Hash</span></dt>
+                <dd>
+                    <span>{{attachment.hash}}</span>
+                </dd>
+                <dt><span>Created By</span></dt>
+                <dd>
+                    <span>{{attachment.createdBy}}</span>
+                </dd>
+                <dt><span>Created Date</span></dt>
+                <dd>
+                    <span>{{attachment.createdDate}}</span>
+                </dd>
+                <dt><span>Last Modified Date</span></dt>
+                <dd>
+                    <span>{{attachment.lastModifiedDate}}</span>
+                </dd>
+                <dt><span>Last Modified By</span></dt>
+                <dd>
+                    <span>{{attachment.lastModifiedBy}}</span>
+                </dd>
+                <dt><span>Comment</span></dt>
+                <dd>
+                    <div *ngIf="attachment.commentId">
+                        <a [routerLink]="['/comment-issue-tracker', attachment.commentId, 'view']">{{attachment.commentId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/attachment-issue-tracker', attachment.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

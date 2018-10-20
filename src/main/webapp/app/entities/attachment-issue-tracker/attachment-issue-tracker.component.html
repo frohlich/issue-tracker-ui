@@ -1,0 +1,72 @@
+<div>
+    <h2 id="page-heading">
+        <span>Attachments</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-attachment-issue-tracker" [routerLink]="['/attachment-issue-tracker/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Attachment
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="attachments">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="filename"><span>Filename</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="size"><span>Size</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="hash"><span>Hash</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdBy"><span>Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdDate"><span>Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedDate"><span>Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedBy"><span>Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="commentId"><span>Comment</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let attachment of attachments ;trackBy: trackId">
+                <td><a [routerLink]="['/attachment-issue-tracker', attachment.id, 'view' ]">{{attachment.id}}</a></td>
+                <td>{{attachment.filename}}</td>
+                <td>{{attachment.size}}</td>
+                <td>{{attachment.hash}}</td>
+                <td>{{attachment.createdBy}}</td>
+                <td>{{attachment.createdDate | date:'medium'}}</td>
+                <td>{{attachment.lastModifiedDate | date:'medium'}}</td>
+                <td>{{attachment.lastModifiedBy}}</td>
+                <td>
+                    <div *ngIf="attachment.commentId">
+                        <a [routerLink]="['../comment-issue-tracker', attachment.commentId , 'view' ]" >{{attachment.commentId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/attachment-issue-tracker', attachment.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/attachment-issue-tracker', attachment.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'attachment-issue-tracker/'+ attachment.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

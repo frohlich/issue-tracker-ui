@@ -1,0 +1,91 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="issue">
+            <h2><span>Issue</span> {{issue.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Title</span></dt>
+                <dd>
+                    <span>{{issue.title}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{issue.description}}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{issue.status}}</span>
+                </dd>
+                <dt><span>Type</span></dt>
+                <dd>
+                    <span>{{issue.type}}</span>
+                </dd>
+                <dt><span>Priority</span></dt>
+                <dd>
+                    <span>{{issue.priority}}</span>
+                </dd>
+                <dt><span>Duo Date</span></dt>
+                <dd>
+                    <span>{{issue.duoDate}}</span>
+                </dd>
+                <dt><span>Closed At</span></dt>
+                <dd>
+                    <span>{{issue.closedAt}}</span>
+                </dd>
+                <dt><span>Created By</span></dt>
+                <dd>
+                    <span>{{issue.createdBy}}</span>
+                </dd>
+                <dt><span>Created Date</span></dt>
+                <dd>
+                    <span>{{issue.createdDate}}</span>
+                </dd>
+                <dt><span>Last Modified Date</span></dt>
+                <dd>
+                    <span>{{issue.lastModifiedDate}}</span>
+                </dd>
+                <dt><span>Last Modified By</span></dt>
+                <dd>
+                    <span>{{issue.lastModifiedBy}}</span>
+                </dd>
+                <dt><span>Issue</span></dt>
+                <dd>
+                    <div *ngIf="issue.issueId">
+                        <a [routerLink]="['/issue-issue-tracker', issue.issueId, 'view']">{{issue.issueId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Closed By</span></dt>
+                <dd>
+                    {{issue.closedByLogin}}
+                </dd>
+                <dt><span>Assigned To</span></dt>
+                <dd>
+                    {{issue.assignedToLogin}}
+                </dd>
+                <dt><span>Reported By</span></dt>
+                <dd>
+                    {{issue.reportedByLogin}}
+                </dd>
+                <dt><span>Project</span></dt>
+                <dd>
+                    <div *ngIf="issue.projectId">
+                        <a [routerLink]="['/project-issue-tracker', issue.projectId, 'view']">{{issue.projectId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/issue-issue-tracker', issue.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

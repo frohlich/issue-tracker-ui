@@ -1,0 +1,59 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="issueHistory">
+            <h2><span>Issue History</span> {{issueHistory.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Flow Start</span></dt>
+                <dd>
+                    <span>{{issueHistory.flowStart}}</span>
+                </dd>
+                <dt><span>Flow End</span></dt>
+                <dd>
+                    <span>{{issueHistory.flowEnd}}</span>
+                </dd>
+                <dt><span>Created By</span></dt>
+                <dd>
+                    <span>{{issueHistory.createdBy}}</span>
+                </dd>
+                <dt><span>Created Date</span></dt>
+                <dd>
+                    <span>{{issueHistory.createdDate}}</span>
+                </dd>
+                <dt><span>Last Modified Date</span></dt>
+                <dd>
+                    <span>{{issueHistory.lastModifiedDate}}</span>
+                </dd>
+                <dt><span>Last Modified By</span></dt>
+                <dd>
+                    <span>{{issueHistory.lastModifiedBy}}</span>
+                </dd>
+                <dt><span>Issue</span></dt>
+                <dd>
+                    <div *ngIf="issueHistory.issueId">
+                        <a [routerLink]="['/issue-issue-tracker', issueHistory.issueId, 'view']">{{issueHistory.issueId}}</a>
+                    </div>
+                </dd>
+                <dt><span>Comment</span></dt>
+                <dd>
+                    <div *ngIf="issueHistory.commentId">
+                        <a [routerLink]="['/comment-issue-tracker', issueHistory.commentId, 'view']">{{issueHistory.commentId}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/issue-history-issue-tracker', issueHistory.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

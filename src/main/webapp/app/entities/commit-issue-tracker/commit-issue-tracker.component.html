@@ -1,0 +1,72 @@
+<div>
+    <h2 id="page-heading">
+        <span>Commits</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-commit-issue-tracker" [routerLink]="['/commit-issue-tracker/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Commit
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="commits">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="hash"><span>Hash</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdBy"><span>Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="createdDate"><span>Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedDate"><span>Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="lastModifiedBy"><span>Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="issueId"><span>Issue</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="ownedByLogin"><span>Owned By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let commit of commits ;trackBy: trackId">
+                <td><a [routerLink]="['/commit-issue-tracker', commit.id, 'view' ]">{{commit.id}}</a></td>
+                <td>{{commit.hash}}</td>
+                <td>{{commit.createdBy}}</td>
+                <td>{{commit.createdDate | date:'medium'}}</td>
+                <td>{{commit.lastModifiedDate | date:'medium'}}</td>
+                <td>{{commit.lastModifiedBy}}</td>
+                <td>
+                    <div *ngIf="commit.issueId">
+                        <a [routerLink]="['../issue-issue-tracker', commit.issueId , 'view' ]" >{{commit.issueId}}</a>
+                    </div>
+                </td>
+                <td>
+                    {{commit.ownedByLogin}}
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/commit-issue-tracker', commit.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/commit-issue-tracker', commit.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'commit-issue-tracker/'+ commit.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
