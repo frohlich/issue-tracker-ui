@@ -20,17 +20,7 @@
             <th jhiSortBy="status"><span>Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="type"><span>Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="priority"><span>Priority</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="duoDate"><span>Duo Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="closedAt"><span>Closed At</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="createdBy"><span>Created By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="createdDate"><span>Created Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="lastModifiedDate"><span>Last Modified Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="lastModifiedBy"><span>Last Modified By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="issueId"><span>Issue</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="closedByLogin"><span>Closed By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="assignedToLogin"><span>Assigned To</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="reportedByLogin"><span>Reported By</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="projectId"><span>Project</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -42,30 +32,8 @@
                 <td>{{issue.status}}</td>
                 <td>{{issue.type}}</td>
                 <td>{{issue.priority}}</td>
-                <td>{{issue.duoDate | date:'medium'}}</td>
-                <td>{{issue.closedAt | date:'medium'}}</td>
-                <td>{{issue.createdBy}}</td>
-                <td>{{issue.createdDate | date:'medium'}}</td>
-                <td>{{issue.lastModifiedDate | date:'medium'}}</td>
-                <td>{{issue.lastModifiedBy}}</td>
-                <td>
-                    <div *ngIf="issue.issueId">
-                        <a [routerLink]="['../issue-issue-tracker', issue.issueId , 'view' ]" >{{issue.issueId}}</a>
-                    </div>
-                </td>
-                <td>
-                    {{issue.closedByLogin}}
-                </td>
                 <td>
                     {{issue.assignedToLogin}}
-                </td>
-                <td>
-                    {{issue.reportedByLogin}}
-                </td>
-                <td>
-                    <div *ngIf="issue.projectId">
-                        <a [routerLink]="['../project-issue-tracker', issue.projectId , 'view' ]" >{{issue.projectId}}</a>
-                    </div>
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

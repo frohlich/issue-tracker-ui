@@ -1,12 +1,5 @@
 <div class="row">
   <div class="col-md-12">
-
-      <div [ngSwitch]="isAuthenticated()">
-          <div class="alert alert-success" *ngSwitchCase="true">
-              <span id="home-logged-message" *ngIf="account"> You are logged in as user "{{account.login}}". </span>
-          </div>
-      </div>
-
       <!--
           TODO: Dashboard com número de projetos criados, número de usuários, número de commits.
       -->

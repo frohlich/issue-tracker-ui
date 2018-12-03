@@ -1,18 +1,60 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-9">
+        <h2>{{issue.title}}</h2>
+        <button type="button" [routerLink]="['/issue-issue-tracker', issue.id, 'edit']" class="btn btn-primary">
+            <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+        </button>
+        <hr>
+        <dt><span>Descrição:</span></dt>
+        <dd>
+            <span>{{issue.description}}</span>
+        </dd>
+        <jhi-alert-error></jhi-alert-error>
+        <!-- HISTORY -->
+        </br>
+        <div class="table-responsive" *ngIf="histories">
+            <table class="table table-striped">
+                <thead>
+                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="">
+                    <th jhiSortBy="title"><span>Descrição</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="status"><span>Criado por</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="type"><span>Criado em</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    <th jhiSortBy="priority"><span>Anexos</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr *ngFor="let history of histories ;trackBy: trackId">
+                        <td>{{history.flowStart}} -> {{history.flowEnd}}</td>
+                        <td>{{history.createdDate}}</td>
+                        <td>{{history.createdBy}}</td>
+                        <td>{{history ? 'Sim': 'Não'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <!-- COMMITS -->
+    </br>
+    <div class="table-responsive" *ngIf="commits">
+        <table class="table table-striped">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="">
+                <th jhiSortBy="hash"><span>Hash</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="status"><span>Criado por</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                <th jhiSortBy="type"><span>Criado em</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            </thead>
+            <tbody >
+                <tr *ngFor="let commit of commits ;trackBy: trackId">
+                    <td>{{commit.hash}}</td>
+                    <td>{{commit.createdBy}}</td>
+                    <td>{{commit.createdDate}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="col-3">
         <div *ngIf="issue">
-            <h2><span>Issue</span> {{issue.id}}</h2>
-            <hr>
-            <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Title</span></dt>
-                <dd>
-                    <span>{{issue.title}}</span>
-                </dd>
-                <dt><span>Description</span></dt>
-                <dd>
-                    <span>{{issue.description}}</span>
-                </dd>
                 <dt><span>Status</span></dt>
                 <dd>
                     <span>{{issue.status}}</span>
@@ -27,23 +69,23 @@
                 </dd>
                 <dt><span>Duo Date</span></dt>
                 <dd>
-                    <span>{{issue.duoDate}}</span>
+                    <span>{{issue.duoDate | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
                 </dd>
                 <dt><span>Closed At</span></dt>
                 <dd>
-                    <span>{{issue.closedAt}}</span>
+                    <span>{{issue.closedAt | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
                 </dd>
                 <dt><span>Created By</span></dt>
                 <dd>
-                    <span>{{issue.createdBy}}</span>
+                    <span>{{issue.createdBy }}</span>
                 </dd>
                 <dt><span>Created Date</span></dt>
                 <dd>
-                    <span>{{issue.createdDate}}</span>
+                    <span>{{issue.createdDate | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
                 </dd>
                 <dt><span>Last Modified Date</span></dt>
                 <dd>
-                    <span>{{issue.lastModifiedDate}}</span>
+                    <span>{{issue.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
                 </dd>
                 <dt><span>Last Modified By</span></dt>
                 <dd>
@@ -75,16 +117,8 @@
                 </dd>
             </dl>
 
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/issue-issue-tracker', issue.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            <button type="submit" (click)="previousState()" class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Voltar</span>
             </button>
         </div>
     </div>

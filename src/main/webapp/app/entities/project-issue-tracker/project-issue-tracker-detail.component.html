@@ -1,13 +1,71 @@
-<div class="row justify-content-center">
-    <div class="col-8">
-        <div *ngIf="project">
-            <h2><span>Project</span> {{project.id}}</h2>
+<div *ngIf="project">
+    <div class="row justify-content-center">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="col-9">
+            <h2> {{project.title}}</h2>
+            <button type="button" [routerLink]="['/project-issue-tracker', project.id, 'edit']" class="btn btn-primary">
+                <fa-icon [icon]="'plus'"></fa-icon>&nbsp;<span>Nova Tarefa</span>
+            </button>
+            <button type="button" [routerLink]="['/project-issue-tracker', project.id, 'edit']" class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Editar</span>
+            </button>
+            <button type="button" class="btn btn-primary" *ngIf="!project.suspended" (click)="suspend()">
+                <span>Suspender</span>
+            </button>
             <hr>
-            <jhi-alert-error></jhi-alert-error>
+            <dt><span>Descrição:</span></dt>
+            <dd>
+            </dd>
+            </br>
+            <div class="table-responsive" *ngIf="project.issues">
+                <table class="table table-striped">
+                    <thead>
+                        <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                        <!-- th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th-->
+                        <th jhiSortBy="title"><span>Title</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                        <th jhiSortBy="status"><span>Status</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                        <th jhiSortBy="type"><span>Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                        <th jhiSortBy="priority"><span>Priority</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                        <th jhiSortBy="assignedToLogin"><span>Assigned To</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let issue of project.issues ;trackBy: trackId">
+                            <!--td><a [routerLink]="['/issue-issue-tracker', issue.id, 'view' ]">{{issue.id}}</a></td-->
+                            <td [routerLink]="['/issue-issue-tracker', issue.id, 'view' ]">{{issue.title}}</td>
+                            <td>{{issue.status}}</td>
+                            <td>{{issue.type}}</td>
+                            <td>{{issue.priority}}</td>
+                            <td>
+                                {{issue.assignedToLogin}}
+                            </td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            [routerLink]="['/issue-issue-tracker', issue.id, 'view' ]"
+                                            class="btn btn-info btn-sm">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                        <span class="d-none d-md-inline">View</span>
+                                    </button>
+                                    <button type="submit"
+                                            [routerLink]="['/issue-issue-tracker', issue.id, 'edit']"
+                                            class="btn btn-primary btn-sm">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                        <span class="d-none d-md-inline">Edit</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-3">
             <dl class="row-md jh-entity-details">
-                <dt><span>Title</span></dt>
+                <dt><span>Owned By</span></dt>
                 <dd>
-                    <span>{{project.title}}</span>
+                    {{project.ownedByLogin}}
                 </dd>
                 <dt><span>Suspended</span></dt>
                 <dd>
@@ -19,32 +77,24 @@
                 </dd>
                 <dt><span>Created Date</span></dt>
                 <dd>
-                    <span>{{project.createdDate}}</span>
+                    <span>{{project.createdDate | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
                 </dd>
                 <dt><span>Last Modified Date</span></dt>
                 <dd>
-                    <span>{{project.lastModifiedDate}}</span>
+                    <span>{{project.lastModifiedDate | date : 'dd/MM/yyyy hh:mm:ss'}}</span>
                 </dd>
                 <dt><span>Last Modified By</span></dt>
                 <dd>
                     <span>{{project.lastModifiedBy}}</span>
                 </dd>
-                <dt><span>Owned By</span></dt>
-                <dd>
-                    {{project.ownedByLogin}}
-                </dd>
+
             </dl>
-
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-info">
-                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
-            </button>
-
-            <button type="button"
-                    [routerLink]="['/project-issue-tracker', project.id, 'edit']"
-                    class="btn btn-primary">
-                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <button type="submit" (click)="previousState()" class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span>Voltar</span>
             </button>
         </div>
     </div>

@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IIssueIssueTracker[]>;
 @Injectable({ providedIn: 'root' })
 export class IssueIssueTrackerService {
     public resourceUrl = SERVER_API_URL + 'api/issues';
+    public resourceQueryUrl = SERVER_API_URL + 'api/_search/issues';
 
     constructor(private http: HttpClient) {}
 
@@ -42,6 +43,13 @@ export class IssueIssueTrackerService {
         const options = createRequestOption(req);
         return this.http
             .get<IIssueIssueTracker[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
+    search(req?: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<IIssueIssueTracker[]>(this.resourceQueryUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
