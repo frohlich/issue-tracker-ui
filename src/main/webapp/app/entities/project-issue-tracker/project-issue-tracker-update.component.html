@@ -33,38 +33,6 @@
                     <input type="checkbox" class="form-control" name="suspended" id="field_suspended"
                         [(ngModel)]="project.suspended" />
                 </div>
-                <!--div class="form-group">
-                    <label class="form-control-label" for="field_createdBy">Created By</label>
-                    <input type="text" class="form-control" name="createdBy" id="field_createdBy"
-                        [(ngModel)]="project.createdBy" />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_createdDate">Created Date</label>
-                    <div class="d-flex">
-                        <input id="field_createdDate" type="datetime-local" class="form-control" name="createdDate" [(ngModel)]="createdDate"
-                        />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_lastModifiedDate">Last Modified Date</label>
-                    <div class="d-flex">
-                        <input id="field_lastModifiedDate" type="datetime-local" class="form-control" name="lastModifiedDate" [(ngModel)]="lastModifiedDate"
-                        />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_lastModifiedBy">Last Modified By</label>
-                    <input type="text" class="form-control" name="lastModifiedBy" id="field_lastModifiedBy"
-                        [(ngModel)]="project.lastModifiedBy" />
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" for="field_ownedBy">Owned By</label>
-                    <select class="form-control" id="field_ownedBy" name="ownedBy" [(ngModel)]="project.ownedById" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
-                    </select>
-                </div-->
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -6,7 +6,7 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IIssueIssueTracker } from 'app/shared/model/issue-issue-tracker.model';
+import { IIssueIssueTracker, IssueType, Priority } from 'app/shared/model/issue-issue-tracker.model';
 import { IssueIssueTrackerService } from './issue-issue-tracker.service';
 import { IUser, UserService } from 'app/core';
 import { IProjectIssueTracker } from 'app/shared/model/project-issue-tracker.model';
@@ -46,6 +46,11 @@ export class IssueIssueTrackerUpdateComponent implements OnInit {
             this.closedAt = this.issue.closedAt != null ? this.issue.closedAt.format(DATE_TIME_FORMAT) : null;
             this.createdDate = this.issue.createdDate != null ? this.issue.createdDate.format(DATE_TIME_FORMAT) : null;
             this.lastModifiedDate = this.issue.lastModifiedDate != null ? this.issue.lastModifiedDate.format(DATE_TIME_FORMAT) : null;
+            if (!this.issue.id || this.issue.id <= 0) {
+                this.issue.projectId = +this.activatedRoute.snapshot.queryParams['projectId'] || null;
+                this.issue.type = IssueType.STORY;
+                this.issue.priority = Priority.MEDIUM;
+            }
         });
         this.issueService.query().subscribe(
             (res: HttpResponse<IIssueIssueTracker[]>) => {

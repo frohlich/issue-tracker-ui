@@ -3,7 +3,7 @@
         <jhi-alert-error></jhi-alert-error>
         <div class="col-9">
             <h2> {{project.title}}</h2>
-            <button type="button" [routerLink]="['/project-issue-tracker', project.id, 'edit']" class="btn btn-primary">
+            <button type="button" [routerLink]="['/issue-issue-tracker', 'new']" [queryParams]="{ 'projectId': project.id }" class="btn btn-primary">
                 <fa-icon [icon]="'plus'"></fa-icon>&nbsp;<span>Nova Tarefa</span>
             </button>
             <button type="button" [routerLink]="['/project-issue-tracker', project.id, 'edit']" class="btn btn-primary">

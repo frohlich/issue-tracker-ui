@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IIssueIssueTracker } from 'app/shared/model/issue-issue-tracker.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IssueFinishFormModalComponent } from './issue-finish-form-modal/issue-finish-form-modal.component';
 
 @Component({
     selector: 'jhi-issue-issue-tracker-detail',
@@ -9,22 +11,8 @@ import { IIssueIssueTracker } from 'app/shared/model/issue-issue-tracker.model';
 })
 export class IssueIssueTrackerDetailComponent implements OnInit {
     issue: IIssueIssueTracker;
-    histories: any[] = [
-        {
-            id: '100',
-            flowStart: '100',
-            flowEnd: '100',
-            createdBy: '100',
-            createdDate: '100',
-            lastModifiedDate: '100',
-            lastModifiedBy: '100',
-            issueId: '100',
-            commentId: '100'
-        }
-    ];
-    commits: any[] = [{ hash: '123', createdBy: 'createdBy', createdDate: 'createdDate' }];
 
-    constructor(private activatedRoute: ActivatedRoute) {}
+    constructor(private activatedRoute: ActivatedRoute, private modalService: NgbModal) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ issue }) => {
@@ -34,5 +22,17 @@ export class IssueIssueTrackerDetailComponent implements OnInit {
 
     previousState() {
         window.history.back();
+    }
+
+    openFormModal() {
+        const modalRef = this.modalService.open(IssueFinishFormModalComponent);
+        modalRef.componentInstance.issueId = this.issue.id;
+        modalRef.result
+            .then(result => {
+                console.log(result);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 }

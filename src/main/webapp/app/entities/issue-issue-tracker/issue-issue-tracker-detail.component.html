@@ -4,53 +4,77 @@
         <button type="button" [routerLink]="['/issue-issue-tracker', issue.id, 'edit']" class="btn btn-primary">
             <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
         </button>
+        <button type="button" (click)="openFormModal()" class="btn btn-primary">
+            Finalizar Etapa
+        </button>
         <hr>
         <dt><span>Descrição:</span></dt>
         <dd>
             <span>{{issue.description}}</span>
         </dd>
         <jhi-alert-error></jhi-alert-error>
-        <!-- HISTORY -->
         </br>
-        <div class="table-responsive" *ngIf="histories">
-            <table class="table table-striped">
-                <thead>
-                    <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="">
-                    <th jhiSortBy="title"><span>Descrição</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                    <th jhiSortBy="status"><span>Criado por</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                    <th jhiSortBy="type"><span>Criado em</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                    <th jhiSortBy="priority"><span>Anexos</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                    </tr>
-                </thead>
-                <tbody >
-                    <tr *ngFor="let history of histories ;trackBy: trackId">
-                        <td>{{history.flowStart}} -> {{history.flowEnd}}</td>
-                        <td>{{history.createdDate}}</td>
-                        <td>{{history.createdBy}}</td>
-                        <td>{{history ? 'Sim': 'Não'}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    <!-- COMMITS -->
-    </br>
-    <div class="table-responsive" *ngIf="commits">
-        <table class="table table-striped">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="">
-                <th jhiSortBy="hash"><span>Hash</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="status"><span>Criado por</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-                <th jhiSortBy="type"><span>Criado em</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            </thead>
-            <tbody >
-                <tr *ngFor="let commit of commits ;trackBy: trackId">
-                    <td>{{commit.hash}}</td>
-                    <td>{{commit.createdBy}}</td>
-                    <td>{{commit.createdDate}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <ngb-tabset>
+            <ngb-tab title="Histórico">
+                <ng-template ngbTabContent>
+                    <div class="table-responsive" *ngIf="issue.histories">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="">
+                                    <th jhiSortBy="title"><span>Descrição</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="status"><span>Criado por</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="type"><span>Criado em</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="priority"><span>Anexos</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let history of issue.histories ;trackBy: trackId">
+                                    <td>{{history.flowStart}} -> {{history.flowEnd}}</td>
+                                    <td>{{history.createdBy}}</td>
+                                    <td>{{history.createdDate}}</td>
+                                    <td>{{history ? 'Sim': 'Não'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab title="Commits">
+                <ng-template ngbTabContent>
+                    <div class="table-responsive" *ngIf="commits">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="">
+                                    <th jhiSortBy="hash"><span>Hash</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="status"><span>Criado por</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                                    <th jhiSortBy="type"><span>Criado em</span>
+                                        <fa-icon [icon]="'sort'"></fa-icon>
+                                    </th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let commit of issue.commits ;trackBy: trackId">
+                                    <td>{{commit.hash}}</td>
+                                    <td>{{commit.createdBy}}</td>
+                                    <td>{{commit.createdDate}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
     </div>
     <div class="col-3">
         <div *ngIf="issue">

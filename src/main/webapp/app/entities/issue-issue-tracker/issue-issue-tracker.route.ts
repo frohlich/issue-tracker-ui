@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@angular/router';
 import { UserRouteAccessService } from 'app/core';
 import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 import { IssueIssueTracker } from 'app/shared/model/issue-issue-tracker.model';
 import { IssueIssueTrackerService } from './issue-issue-tracker.service';
 import { IssueIssueTrackerComponent } from './issue-issue-tracker.component';
@@ -11,15 +11,26 @@ import { IssueIssueTrackerDetailComponent } from './issue-issue-tracker-detail.c
 import { IssueIssueTrackerUpdateComponent } from './issue-issue-tracker-update.component';
 import { IssueIssueTrackerDeletePopupComponent } from './issue-issue-tracker-delete-dialog.component';
 import { IIssueIssueTracker } from 'app/shared/model/issue-issue-tracker.model';
+import { IssueHistoryIssueTrackerService } from '../issue-history-issue-tracker';
 
 @Injectable({ providedIn: 'root' })
 export class IssueIssueTrackerResolve implements Resolve<IIssueIssueTracker> {
-    constructor(private service: IssueIssueTrackerService) {}
+    constructor(private service: IssueIssueTrackerService, private historyService: IssueHistoryIssueTrackerService) {}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
-            return this.service.find(id).pipe(map((issue: HttpResponse<IssueIssueTracker>) => issue.body));
+            return this.service.find(id).pipe(
+                map((issue: HttpResponse<IssueIssueTracker>) => issue.body),
+                mergeMap(i =>
+                    this.historyService.findByIssueId(i.id).pipe(
+                        map(issues => {
+                            i.histories = issues.body;
+                            return i;
+                        })
+                    )
+                )
+            );
         }
         return of(new IssueIssueTracker());
     }

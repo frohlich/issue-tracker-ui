@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IIssueIssueTracker } from 'app/shared/model/issue-issue-tracker.model';
+import { IssueHistoryIssueTracker } from 'app/shared/model/issue-history-issue-tracker.model';
 
 type EntityResponseType = HttpResponse<IIssueIssueTracker>;
 type EntityArrayResponseType = HttpResponse<IIssueIssueTracker[]>;
@@ -55,6 +56,22 @@ export class IssueIssueTrackerService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    flowNext(issueId: number, files: File[], comment: string): Observable<EntityResponseType> {
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('file', files[i]);
+        }
+        formData.append('comment', comment);
+
+        const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+        // const copy = this.convertDateFromClient(issue);
+        return this.http
+            .post<IssueHistoryIssueTracker>(`${this.resourceUrl}/${issueId}/flow`, formData, { headers: headers, observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     private convertDateFromClient(issue: IIssueIssueTracker): IIssueIssueTracker {

@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IIssueHistoryIssueTracker[]>;
 @Injectable({ providedIn: 'root' })
 export class IssueHistoryIssueTrackerService {
     public resourceUrl = SERVER_API_URL + 'api/issue-histories';
+    public resourceQueryUrl = SERVER_API_URL + 'api/_search/issue-histories';
 
     constructor(private http: HttpClient) {}
 
@@ -38,10 +39,24 @@ export class IssueHistoryIssueTrackerService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findByIssueId(id: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({});
+        return this.http
+            .get<IIssueHistoryIssueTracker[]>(`${this.resourceUrl}/byissueid/${id}`, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
             .get<IIssueHistoryIssueTracker[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
+    search(req?: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption(req);
+        return this.http
+            .get<IIssueHistoryIssueTracker[]>(this.resourceQueryUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 

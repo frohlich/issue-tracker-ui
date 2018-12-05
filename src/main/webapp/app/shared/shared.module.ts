@@ -4,8 +4,10 @@ import { NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { NgbDateMomentAdapter } from './util/datepicker-adapter';
 import { IssueTrackerSharedLibsModule, IssueTrackerSharedCommonModule, JhiLoginModalComponent, HasAnyAuthorityDirective } from './';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
-    imports: [IssueTrackerSharedLibsModule, IssueTrackerSharedCommonModule],
+    imports: [IssueTrackerSharedLibsModule, IssueTrackerSharedCommonModule, NgbModule],
     declarations: [JhiLoginModalComponent, HasAnyAuthorityDirective],
     providers: [{ provide: NgbDateAdapter, useClass: NgbDateMomentAdapter }],
     entryComponents: [JhiLoginModalComponent],

@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import { ICommitIssueTracker } from 'app/shared/model//commit-issue-tracker.model';
 import { ICommentIssueTracker } from 'app/shared/model//comment-issue-tracker.model';
 import { IIssueIssueTracker } from 'app/shared/model//issue-issue-tracker.model';
+import { IIssueHistoryIssueTracker } from './issue-history-issue-tracker.model';
 
 export const enum Flow {
     BACKLOG = 'BACKLOG',
@@ -66,6 +67,7 @@ export class IssueIssueTracker implements IIssueIssueTracker {
         public lastModifiedBy?: string,
         public commits?: ICommitIssueTracker[],
         public comments?: ICommentIssueTracker[],
+        public histories?: IIssueHistoryIssueTracker[],
         public issueId?: number,
         public parents?: IIssueIssueTracker[],
         public closedByLogin?: string,
