@@ -30,6 +30,8 @@ export class IssueIssueTrackerUpdateComponent implements OnInit {
     createdDate: string;
     lastModifiedDate: string;
 
+    blockType = false;
+
     constructor(
         private jhiAlertService: JhiAlertService,
         private issueService: IssueIssueTrackerService,
@@ -48,8 +50,13 @@ export class IssueIssueTrackerUpdateComponent implements OnInit {
             this.lastModifiedDate = this.issue.lastModifiedDate != null ? this.issue.lastModifiedDate.format(DATE_TIME_FORMAT) : null;
             if (!this.issue.id || this.issue.id <= 0) {
                 this.issue.projectId = +this.activatedRoute.snapshot.queryParams['projectId'] || null;
+                this.issue.issueId = +this.activatedRoute.snapshot.queryParams['parentId'] || null;
                 this.issue.type = IssueType.STORY;
                 this.issue.priority = Priority.MEDIUM;
+            }
+            if (this.issue.issueId) {
+                this.issue.type = IssueType.BUG;
+                this.blockType = true;
             }
         });
         this.issueService.query().subscribe(

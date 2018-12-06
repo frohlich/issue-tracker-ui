@@ -23,7 +23,7 @@ export class ProjectIssueTrackerResolve implements Resolve<IProjectIssueTracker>
             return this.service.find(id).pipe(
                 map((project: HttpResponse<ProjectIssueTracker>) => project.body),
                 mergeMap(p =>
-                    this.issueService.search({ query: `projectId EQ ${p.id}` }).pipe(
+                    this.issueService.findByProjectId(p.id).pipe(
                         map(issues => {
                             p.issues = issues.body;
                             return p;

@@ -1,36 +1,50 @@
 <div class="row">
-  <div class="col-md-12">
-      <!--
+    <div class="col-md-12">
+        <!--
           TODO: Dashboard com número de projetos criados, número de usuários, número de commits.
       -->
-      <div>
-        <h1>Dashboard</h1>
-      </div>
-      <div class="row">
-          <div class="col-md-4">
-              <div>
-                  Projetos
-              </div>
-              <div>
-                  10 Projetos foram iniciados.
-              </div>
-          </div>
-          <div class="col-md-4">
-              <span>
-                  Commits
-              </span>
-              <div>
-                  Já foram feitos 1231 commits.
-              </div>
-          </div>
-          <div class="col-md-4">
-              <span>
-                  Usuários
-              </span>
-              <div>
-                  Existem 40 usuários cadastrados.
-              </div>
-          </div>
-      </div>
-  </div>
+        <div>
+            <h1>Dashboard</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div>
+                    <strong>Projetos</strong>
+                </div>
+                <div>
+                    {{projects}} Projetos foram iniciados.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <span>
+
+                    <strong>Commits</strong>
+                </span>
+                <div>
+                    Já foram feitos {{commits}} commits.
+                </div>
+            </div>
+            <div class="col-md-4">
+                <span>
+
+                    <strong>Usuários</strong>
+                </span>
+                <div>
+                    Existem {{users}} usuários cadastrados.
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4">
+                <span>
+
+                    <strong>Tarefas</strong>
+                </span>
+                <div>
+                    Existem {{issues}} tarefas cadastrados.
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

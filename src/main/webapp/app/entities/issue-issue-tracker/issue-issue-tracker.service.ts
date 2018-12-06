@@ -90,6 +90,13 @@ export class IssueIssueTrackerService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findByProjectId(id: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({});
+        return this.http
+            .get<IIssueIssueTracker[]>(`${this.resourceUrl}/byprojectid/${id}`, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     private convertDateFromClient(issue: IIssueIssueTracker): IIssueIssueTracker {
         const copy: IIssueIssueTracker = Object.assign({}, issue, {
             duoDate: issue.duoDate != null && issue.duoDate.isValid() ? issue.duoDate.toJSON() : null,
