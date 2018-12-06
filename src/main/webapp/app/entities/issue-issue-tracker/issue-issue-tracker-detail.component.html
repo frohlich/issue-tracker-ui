@@ -94,7 +94,7 @@
                                 <tr *ngFor="let commit of issue.commits ;trackBy: trackId">
                                     <td>{{commit.hash}}</td>
                                     <td>{{commit.createdBy}}</td>
-                                    <td>{{commit.createdDate}}</td>
+                                    <td>{{commit.createdDate | date : 'dd/MM/yyyy hh:mm:ss' }}</td>
                                 </tr>
                             </tbody>
                         </table>
