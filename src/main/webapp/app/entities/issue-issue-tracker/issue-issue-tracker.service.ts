@@ -62,7 +62,7 @@ export class IssueIssueTrackerService {
         const formData = new FormData();
 
         for (let i = 0; i < files.length; i++) {
-            formData.append('file', files[i]);
+            formData.append('files', files[i]);
         }
         formData.append('comment', comment);
 
@@ -70,7 +70,23 @@ export class IssueIssueTrackerService {
 
         // const copy = this.convertDateFromClient(issue);
         return this.http
-            .post<IssueHistoryIssueTracker>(`${this.resourceUrl}/${issueId}/flow`, formData, { headers: headers, observe: 'response' })
+            .post<IssueHistoryIssueTracker>(`${this.resourceUrl}/${issueId}/flow`, formData, { headers, observe: 'response' })
+            .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    cancel(issueId: number, files: File[], comment: string): Observable<EntityResponseType> {
+        const formData = new FormData();
+
+        for (let i = 0; i < files.length; i++) {
+            formData.append('files', files[i]);
+        }
+        formData.append('comment', comment);
+
+        const headers = new HttpHeaders({ enctype: 'multipart/form-data' });
+
+        // const copy = this.convertDateFromClient(issue);
+        return this.http
+            .post<IssueHistoryIssueTracker>(`${this.resourceUrl}/${issueId}/cancel`, formData, { headers, observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 

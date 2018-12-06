@@ -40,6 +40,7 @@ export interface IIssueIssueTracker {
     lastModifiedBy?: string;
     commits?: ICommitIssueTracker[];
     comments?: ICommentIssueTracker[];
+    histories?: IIssueHistoryIssueTracker[];
     issueId?: number;
     parents?: IIssueIssueTracker[];
     closedByLogin?: string;

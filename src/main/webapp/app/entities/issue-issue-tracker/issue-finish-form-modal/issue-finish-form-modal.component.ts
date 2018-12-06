@@ -14,6 +14,7 @@ export class IssueFinishFormModalComponent implements OnInit {
     files: File[];
     comment: string;
     @Input() issueId: number;
+    @Input() isCancelation: boolean;
 
     constructor(private activeModal: NgbActiveModal, private issueService: IssueIssueTrackerService) {}
 
@@ -30,9 +31,27 @@ export class IssueFinishFormModalComponent implements OnInit {
         this.activeModal.close('Modal Closed');
     }
 
+    action() {
+        if (this.isCancelation) {
+            this.cancel();
+        } else {
+            this.flowNext();
+        }
+    }
+
+    cancel() {
+        console.log(this.files, this.comment);
+        const attachs = this.files || [];
+        this.issueService.cancel(this.issueId, attachs, this.comment).subscribe(response => {
+            console.log(response);
+            this.activeModal.close(response);
+        });
+    }
+
     flowNext() {
         console.log(this.files, this.comment);
-        this.issueService.flowNext(this.issueId, this.files, this.comment).subscribe(response => {
+        const attachs = this.files || [];
+        this.issueService.flowNext(this.issueId, attachs, this.comment).subscribe(response => {
             console.log(response);
             this.activeModal.close(response);
         });

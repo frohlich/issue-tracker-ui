@@ -1,11 +1,11 @@
 <div class="modal-header">
-  <h4 class="modal-title">Finalizar Etapa</h4>
+  <h4 class="modal-title">{{ isCancelation ? 'Cancelar' : 'Finalizar Etapa' }}</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <fa-icon [icon]="'times'"></fa-icon>
   </button>
 </div>
 <div class="modal-body">
-  <form name="flowForm" role="form" novalidate #editForm="ngForm">
+  <form name="flowForm" role="form" novalidate #flowForm="ngForm">
     <div class="form-group">
       <label class="control-label col-xs-4" for="">Descrição:</label>
       <div class="col-xs-8">
@@ -23,7 +23,8 @@
   <button class="btn btn-secondary" (click)="activeModal.dismiss('Close clicked')">
     Fechar
   </button>
-  <button class="btn btn-primary" (click)="flowNext()">
-    Finalizar
+  {{flowForm.controls.comment?.errors?.length}}
+  <button class="btn btn-primary" (click)="action()" (disabled)="flowForm.controls.comment?.errors?.length">
+    {{ isCancelation ? 'Cancelar' : 'Finalizar' }}
   </button>
 </div>

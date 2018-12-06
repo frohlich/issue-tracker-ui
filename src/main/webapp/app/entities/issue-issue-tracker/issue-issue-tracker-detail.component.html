@@ -4,9 +4,16 @@
         <button type="button" [routerLink]="['/issue-issue-tracker', issue.id, 'edit']" class="btn btn-primary">
             <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
         </button>
-        <button type="button" (click)="openFormModal()" class="btn btn-primary">
-            Finalizar Etapa
-        </button>
+        <span *ngIf="issue.status != 'FINISHED' && issue.status != 'CANCELED'">
+            <button type="button" (click)="openFormModal()" class="btn btn-primary">
+                Finalizar Etapa
+            </button>
+        </span>
+        <span *ngIf="issue.status != 'FINISHED' && issue.status != 'CANCELED'">
+            <button type="button" (click)="openFormModal(true)" class="btn btn-primary">
+                Cancelar
+            </button>
+        </span>
         <hr>
         <dt><span>Descrição:</span></dt>
         <dd>
@@ -37,10 +44,25 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let history of issue.histories ;trackBy: trackId">
-                                    <td>{{history.flowStart}} -> {{history.flowEnd}}</td>
+                                    <td>
+                                        <strong>
+                                            {{history.flowStart}} 
+                                            &#10230;
+                                            {{history.flowEnd}}
+                                        </strong>
+                                        <br>
+                                        {{ history.commentDescription }}
+                                    </td>
                                     <td>{{history.createdBy}}</td>
                                     <td>{{history.createdDate}}</td>
-                                    <td>{{history ? 'Sim': 'Não'}}</td>
+                                    <td>
+                                        <span *ngIf="history.attachments == null || history.attachments?.length === 0">
+                                            Não
+                                        </span>
+                                        <button class="btn btn-primary" *ngIf="history.attachments?.length > 0" (click)="openAttachmentModal(history)">
+                                            Mostrar
+                                        </button>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

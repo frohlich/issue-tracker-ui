@@ -38,6 +38,13 @@ export class CommitIssueTrackerService {
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
+    findByIssueId(id: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({});
+        return this.http
+            .get<ICommitIssueTracker[]>(`${this.resourceUrl}/byissueid/${id}`, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http

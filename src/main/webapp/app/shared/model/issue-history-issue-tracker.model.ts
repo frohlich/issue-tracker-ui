@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { IAttachmentIssueTracker } from './attachment-issue-tracker.model';
 
 export const enum Flow {
     BACKLOG = 'BACKLOG',
@@ -18,6 +19,7 @@ export interface IIssueHistoryIssueTracker {
     lastModifiedBy?: string;
     issueId?: number;
     commentId?: number;
+    attachments?: IAttachmentIssueTracker[];
 }
 
 export class IssueHistoryIssueTracker implements IIssueHistoryIssueTracker {
@@ -30,6 +32,7 @@ export class IssueHistoryIssueTracker implements IIssueHistoryIssueTracker {
         public lastModifiedDate?: Moment,
         public lastModifiedBy?: string,
         public issueId?: number,
-        public commentId?: number
+        public commentId?: number,
+        public attachments?: IAttachmentIssueTracker[]
     ) {}
 }

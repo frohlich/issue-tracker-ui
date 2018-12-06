@@ -1,0 +1,38 @@
+<div class="modal-header">
+  <h4 class="modal-title">Anexos</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <fa-icon [icon]="'times'"></fa-icon>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="table-responsive" *ngIf="attachments">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th><span>ID</span>
+          </th>
+          <th><span>Arquivo</span>
+          </th>
+          <th><span>Link</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attach of attachments ;trackBy: trackId">
+          <td>{{attach.id}}</td>
+          <td>{{attach.filename}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="salvar(attach.id, attach.filename, attach.hash)">
+              Salvar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" (click)="activeModal.dismiss('Close clicked')">
+    Fechar
+  </button>
+</div>

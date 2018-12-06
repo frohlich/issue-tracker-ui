@@ -45,6 +45,13 @@ export class AttachmentIssueTrackerService {
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
+    findByCommentId(id: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({});
+        return this.http
+            .get<IAttachmentIssueTracker[]>(`${this.resourceUrl}/bycommentid/${id}`, { params: options, observe: 'response' })
+            .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

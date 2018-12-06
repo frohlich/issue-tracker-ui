@@ -13,6 +13,7 @@ import {
     issuePopupRoute
 } from './';
 import { IssueFinishFormModalComponent } from './issue-finish-form-modal/issue-finish-form-modal.component';
+import { IssueAttachmentsModalComponent } from './issue-attachments-modal/issue-attachments-modal.component';
 
 const ENTITY_STATES = [...issueRoute, ...issuePopupRoute];
 
@@ -24,14 +25,16 @@ const ENTITY_STATES = [...issueRoute, ...issuePopupRoute];
         IssueIssueTrackerUpdateComponent,
         IssueIssueTrackerDeleteDialogComponent,
         IssueIssueTrackerDeletePopupComponent,
-        IssueFinishFormModalComponent
+        IssueFinishFormModalComponent,
+        IssueAttachmentsModalComponent
     ],
     entryComponents: [
         IssueIssueTrackerComponent,
         IssueIssueTrackerUpdateComponent,
         IssueIssueTrackerDeleteDialogComponent,
         IssueIssueTrackerDeletePopupComponent,
-        IssueFinishFormModalComponent
+        IssueFinishFormModalComponent,
+        IssueAttachmentsModalComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
